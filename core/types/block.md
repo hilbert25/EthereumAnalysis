@@ -80,7 +80,7 @@
         <tr>
             <th>Nonce</th>
             <th>BlockNonce</th>
-            <th>区块Nonce</th>
+            <th>区块Nonce,随机数</th>
         </tr>
 </table>
 
