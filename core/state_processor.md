@@ -216,15 +216,19 @@ evm有错误，则输出一下err。evm可能报的错误有下（看一下evm.g
 	}
 	st.gas += refund
 
-	// Return ETH for remaining gas, exchanged at the original rate.
 	remaining := new(big.Int).Mul(new(big.Int).SetUint64(st.gas), st.gasPrice)
 	st.state.AddBalance(st.msg.From(), remaining)
 
-	// Also return remaining gas to the block gas counter so it is
-	// available for the next transaction.
 	st.gp.AddGas(st.gas)
+以下节选自黄皮书：
 
+    最终要退回发送者的燃料g<sup>*</sup>等于当前剩余的燃料g<sup>′</sup>, 再加一个补偿, 这个补偿是A<sub>r</sub> 和总使用燃料量的一半中的小者。
+关于A<sub>r</sub>的定义：
 
+    Finally there is Ar, the refund balance,
+    increased through using the SSTORE instruction in order
+    to reset contract storage to zero from some non-zero value.Though not immediately refunded, it is allowed to partially offset the total execution costs.
+    用sstore指令把非0合约存储空间置0时Ar会增加。
 
     
 
